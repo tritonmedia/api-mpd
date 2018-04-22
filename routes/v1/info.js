@@ -14,7 +14,10 @@ module.exports = (app, mpc, debug) => {
    * GET /icecast - Get icecast info
    */
   app.get('/icecast', async (req, res) => {
-    const info = await request.get('http://icecast:8000/status-json.xsl')
+    const info = await request.get({
+      uri: 'http://icecast:8000/status-json.xsl',
+      json: true
+    })
 
     debug('icecast', info)
 
