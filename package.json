@@ -13,9 +13,12 @@
     "eslint-plugin-import": "^2.7.0"
   },
   "dependencies": {
+    "album-art": "^2.0.0",
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "debug": "^3.1.0",
     "express": "^4.16.3",
+    "express-ws": "^3.0.0",
     "fs-extra": "^5.0.0",
     "mpc-js": "^1.2.1"
   }

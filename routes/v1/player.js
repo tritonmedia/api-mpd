@@ -7,6 +7,7 @@
  * @admin
  */
 
+const albumArt = require('album-art')
 module.exports = async function (app, mpc, debug) {
   const getPlaylistPos = async () => {
     const nowPlaying = await mpc.status.currentSong()
@@ -14,6 +15,10 @@ module.exports = async function (app, mpc, debug) {
 
     return Number(nowPlaying.position)
   }
+
+  app.get('/url', (req, res) => {
+    return res.success('https://music.tritonjs.com/stream')
+  })
 
   /**
    * Add song to the queue.
@@ -90,6 +95,15 @@ module.exports = async function (app, mpc, debug) {
     try {
       const song = await mpc.status.currentSong()
       if(!song) throw new Error('Song not playing.')
+
+      song.albumArtURL = await albumArt(song.albumArtist, {
+        album: song.album
+      })
+
+      if(!song.albumArtURL) {
+        debug('get:album-art', 'failed to find artist, default to musician')
+        song.albumArtURL = await albumArt(song.albumArtist)
+      }
 
       return res.success(song)
     } catch(err) {

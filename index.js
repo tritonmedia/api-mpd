@@ -11,6 +11,7 @@ const bodyp = require('body-parser')
 const dm = require('debug')
 const fs = require('fs-extra')
 const path = require('path')
+const cors = require('cors')
 const { MPC } = require('mpc-js')
 
 const debug = dm('api:main')
@@ -22,6 +23,7 @@ const MPC_PORT = process.env.MPC_PORT || 6600
 
 const app = express()
 app.use(bodyp.json())
+app.use(cors())
 app.use((req, res, next) => {
   res.error = data => res.send({
     success: false,
@@ -35,6 +37,8 @@ app.use((req, res, next) => {
 
   next();
 });
+
+require('express-ws')(app)
 
 const mpc = new MPC()
 mpc.connectTCP(MPC_HOST, MPC_PORT)
@@ -65,9 +69,10 @@ mpc.on('ready', async () => {
     }
 
     const mountPath = `/${API_VERSION}/${name}`
-    debug(`${route} -> ${mountPath}`)
+    debug(`${route} -> (/api)?${mountPath}`)
 
     app.use(mountPath, newRouter)
+    app.use(`/api${mountPath}`, newRouter)
   });
 
   app.listen(8100, () => {
