@@ -1,6 +1,6 @@
 /**
  * /v1/info - Server Info API
- * 
+ *
  * @author Jared Allard <jaredallard@outlook.com>
  * @license MIT
  * @version 1

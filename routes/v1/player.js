@@ -1,6 +1,6 @@
 /**
  * /v1/player - Player API
- * 
+ *
  * @author Jared Allard <jaredallard@outlook.com>
  * @license MIT
  * @version 1
@@ -8,6 +8,7 @@
  */
 
 const albumArt = require('album-art')
+
 module.exports = async function (app, mpc, debug) {
   const getPlaylistPos = async () => {
     const nowPlaying = await mpc.status.currentSong()
@@ -16,9 +17,7 @@ module.exports = async function (app, mpc, debug) {
     return Number(nowPlaying.position)
   }
 
-  app.get('/url', (req, res) => {
-    return res.success('https://music.tritonjs.com/stream')
-  })
+  app.get('/url', (req, res) => res.success('https://music.tritonjs.com/stream'))
 
   /**
    * Add song to the queue.
@@ -122,7 +121,7 @@ module.exports = async function (app, mpc, debug) {
     const ALLOWED_STATUSES = ['pause', 'next', 'previous', 'play']
     try {
       if(!status) throw new TypeError('Missing status.')
-      if(ALLOWED_STATUSES.indexOf(status) == -1) throw new Error('Unexpected status.')
+      if(ALLOWED_STATUSES.indexOf(status) === -1) throw new Error('Unexpected status.')
       if(!mpc.playback[status]) throw new Error('Unexpected status.')
       await mpc.playback[status](status !== 'play')
     } catch(err) {

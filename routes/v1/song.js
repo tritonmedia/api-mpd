@@ -1,6 +1,6 @@
 /**
  * Get Metadata on a song.
- * 
+ *
  * @author Jared Allard <jaredallard@outlook.com>
  */
 
