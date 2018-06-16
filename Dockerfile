@@ -1,8 +1,10 @@
 FROM node:9.11-alpine
 
-WORKDIR "/app"
-CMD [ "node", "/app/index.js" ]
+RUN apk add --no-cache dumb-init
 
-COPY package.json /app
+WORKDIR "/app"
+CMD [ "dumb-init", "node", "/app/index.js" ]
+
+COPY package.json yarn.lock /app/
 RUN yarn
 COPY . /app
