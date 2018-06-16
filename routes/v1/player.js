@@ -7,7 +7,7 @@
  * @admin
  */
 
-const albumArt = require('album-art')
+const albumArt = require('../../helpers/album-art')
 
 module.exports = async function (app, mpc, debug) {
   const getPlaylistPos = async () => {

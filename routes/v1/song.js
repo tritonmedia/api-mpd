@@ -4,7 +4,7 @@
  * @author Jared Allard <jaredallard@outlook.com>
  */
 
-const albumArt = require('album-art')
+const albumArt = require('../../helpers/album-art')
 
 module.exports = (app, mpc, debug) => {
   app.get('/:trackid', async (req, res) => {
