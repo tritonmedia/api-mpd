@@ -7,11 +7,13 @@
  */
 
 const albumArt = require('album-art')
+const debug = require('debug')('api:helpers:album-art')
 
 const cache = {}
 
 module.exports = async function (artist, opts) {
   if(!cache[artist]) {
+    debug('cache:init', artist)
     cache[artist] = {
       albums: {},
       self: null
@@ -21,6 +23,7 @@ module.exports = async function (artist, opts) {
   if(cache[artist].self && !opts) return cache[artist].self
   if(cache[artist].albums[opts.album]) return cache[artist].albums[opts.album]
 
+  debug('cache:miss', artist, 'album:', typeof opts === 'object' ? opts.album : null)
   const art = await albumArt(artist, opts)
   if(!art) return null
 
